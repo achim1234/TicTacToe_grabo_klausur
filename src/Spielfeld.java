@@ -40,7 +40,7 @@ public class Spielfeld {
 				spielfeld[yAchse][xAchse].setBackground(Color.gray);
 				spielfeld[yAchse][xAchse].setBorder(border);
 				spielfeld[yAchse][xAchse].setOpaque(true);
-				spielfeld[yAchse][xAchse].addMouseListener(new ListenerMaus(hauptfenster));
+				spielfeld[yAchse][xAchse].addMouseListener(new ListenerMaus(this.hauptfenster));
 				this.hauptfenster.add(spielfeld[yAchse][xAchse]);
 				
 			}
@@ -53,13 +53,42 @@ public class Spielfeld {
 	public void fillSpielfeld(){
 		//Spielfiguren aus logik holen
 		
-		
-		hauptfenster.getTicTacToeLogic().setField(0, 0);
+	
+	/*	hauptfenster.getTicTacToeLogic().setField(0, 0);
 		spielfeld[0][0].setText("x");
+		hauptfenster.getTicTacToeLogic().setField(0, 1);
+		spielfeld[0][1].setText("x");*/
 		
 		
 		
 		
+	/*	String besetzungSpielfeld = hauptfenster.getTicTacToeLogic().BoardtoString();
+		double x =  hauptfenster.getTicTacToeLogic().getactivePoint().getX();
+		int y = (int) hauptfenster.getTicTacToeLogic().getactivePoint().getY();
+		
+	
+		System.out.println(x);
+		*/
+		
+		
+		//System.out.println("ActivePoint: " + hauptfenster.getTicTacToeLogic().getactivePoint());
+		
+		if(hauptfenster.getTicTacToeLogic().getactivePoint() != null){
+			this.spielfeld[hauptfenster.getTicTacToeLogic().getactivePoint().x][hauptfenster.getTicTacToeLogic().getactivePoint().y].setText("x");
+		}
+		
+		hauptfenster.getTicTacToeLogic().printBoard();
+		System.out.println();
+		System.out.println();
+		
+		
+		
+	}
+	
+	
+	
+	public JLabel[][] getSpielfeldArray(){
+		return this.spielfeld;
 	}
 	
 	public void clearSpielfeld(){

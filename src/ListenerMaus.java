@@ -1,14 +1,22 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JLabel;
+
 
 public class ListenerMaus implements MouseListener{
 	
 	private Hauptfenster hauptfenster;
+	private int sizeFelderQuadrat; //TicTacToe Feld ist immer Quadratisch
+	
+	private JLabel[][] labelArray;
 	
 	
 	public ListenerMaus(Hauptfenster hauptfenster) {
 		this.hauptfenster = hauptfenster;
+		sizeFelderQuadrat = hauptfenster.getTicTacToeLogic().getSize();
+		
+		
 	}
 
 	@Override
@@ -31,15 +39,34 @@ public class ListenerMaus implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		System.out.println("Feld angeklickt");
-		
-		//player position x 
-		//player position y benötigt
-		
-	//	hauptfenster.getTicTacToeLogic().setField(0, y);
+	
 		
 		
-		////hauptfenster.
+	//	System.out.println("Feld angeklickt");
+	//	System.out.println("activePoint: " + hauptfenster.getTicTacToeLogic().getactivePoint());
+		
+		labelArray = new JLabel[sizeFelderQuadrat][sizeFelderQuadrat];
+		labelArray = hauptfenster.getSpielfeld().getSpielfeldArray();
+		
+	
+		
+	
+		
+		for(int i = 0; i < sizeFelderQuadrat; i++){
+			for(int j = 0; j < sizeFelderQuadrat; j++){
+			
+				if(e.getSource() == labelArray[i][j]){///
+					hauptfenster.getTicTacToeLogic().setField(i, j);
+					//hauptfenster.getSpielfeld().
+					//System.out.println(i + ", " + j);
+						
+				}
+			}
+		}
+			
+						
+		
+		
 		
 	}
 
