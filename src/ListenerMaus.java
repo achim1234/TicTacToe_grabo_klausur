@@ -1,20 +1,23 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
 
-public class ListenerMaus implements MouseListener{
+public class ListenerMaus extends MouseAdapter implements ActionListener{
 	
 	private Hauptfenster hauptfenster;
-	private int sizeFelderQuadrat; //TicTacToe Feld ist immer Quadratisch
+	
 	
 	private JLabel[][] labelArray;
 	
 	
 	public ListenerMaus(Hauptfenster hauptfenster) {
 		this.hauptfenster = hauptfenster;
-		sizeFelderQuadrat = hauptfenster.getTicTacToeLogic().getSize();
+		
 		
 		
 	}
@@ -45,33 +48,42 @@ public class ListenerMaus implements MouseListener{
 	//	System.out.println("Feld angeklickt");
 	//	System.out.println("activePoint: " + hauptfenster.getTicTacToeLogic().getactivePoint());
 		
-		labelArray = new JLabel[sizeFelderQuadrat][sizeFelderQuadrat];
-		labelArray = hauptfenster.getSpielfeld().getSpielfeldArray();
 		
-	
+		int size_x = hauptfenster.getTicTacToeLogic().getSize();
+		int size_y = hauptfenster.getTicTacToeLogic().getSize();
 		
-	
 		
-		for(int i = 0; i < sizeFelderQuadrat; i++){
-			for(int j = 0; j < sizeFelderQuadrat; j++){
+		//Linksklick
+		if(e.getButton() == 1){
 			
-				if(e.getSource() == labelArray[i][j]){///
-					hauptfenster.getTicTacToeLogic().setField(i, j);
-					//hauptfenster.getSpielfeld().
-					//System.out.println(i + ", " + j);
-						
+			labelArray = new JLabel[size_x][size_y];
+			labelArray = hauptfenster.getSpielfeld().getSpielfeldLabels();
+		
+	
+			for(int i = 0; i < size_y; i++){
+			
+				for(int j = 0; j < size_x; j++){
+			
+					if(e.getSource() == labelArray[i][j]){///
+						hauptfenster.getTicTacToeLogic().setField(i, j);
+						hauptfenster.getSpielfeld().repaint();
+					
+					}
 				}
 			}
 		}
-			
-						
-		
-		
+	}
+	
+	
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
+	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}

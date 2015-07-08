@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -13,27 +14,35 @@ import de.fhwgt.tictactoe.TicTacToeLogic;
 
 
 public class Hauptfenster extends JFrame{
-	private Spielfeld spielfeld;
 	
+	private Spielfeld spielfeld;
 	private TicTacToeLogic ticTacToeLogic;
-
+	private int spielfeldMatrix = 3;
 	
 	
 	Hauptfenster(){
-		this.ticTacToeLogic = new TicTacToeLogic();
+		
 		this.setTitle("TicTacToe");
-
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false); //Fenster kann mit Maus nicht vergrößert werden
+		this.setLayout(new BorderLayout()); // Dem Fenster ein BorderLayout geben
 		
-		spielfeld = new Spielfeld(this); //neues Spielfeld zeichnen
-
+		this.initTicTacToe();
 		
+		this.setLocationRelativeTo(null); //Fenster in mitte des Bildschirm
+		this.pack();
+		this.setVisible(true);
+		this.requestFocus();
+	}
+	
+	
+	public void initTicTacToe(){
+		
+		this.ticTacToeLogic = new TicTacToeLogic(spielfeldMatrix);
 		this.ticTacToeLogic.addTicTacToeListener(new Listener(this)); //TicTacToe Listener wird registriert
 		
-		this.setResizable(false); //Fenster kann mit Maus nicht vergrößert werden
-		this.pack();
-	
-		this.setVisible(true);
-		
+		this.spielfeld = new Spielfeld(this); //neues Spielfeld zeichnen
+		this.add(BorderLayout.CENTER, this.spielfeld);
 	}
 	
 	
@@ -41,9 +50,8 @@ public class Hauptfenster extends JFrame{
 		return this.ticTacToeLogic;
 	}
 	
-	public void repaintGame(){
-		spielfeld.clearSpielfeld();
-		spielfeld.fillSpielfeld();
+	public void repaintGame(TicTacToeEvent e){
+		spielfeld.drawSpielfeld(e);
 	}
 	
 	public Spielfeld getSpielfeld(){

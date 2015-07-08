@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import de.fhwgt.tictactoe.TicTacToeEvent;
 import de.fhwgt.tictactoe.TicTacToeListener;
 import de.fhwgt.tictactoe.TicTacToeLogic;
@@ -15,10 +17,7 @@ public class Listener implements TicTacToeListener{
 	//es wurde ein Feld im Spielfeld gesetzt
 	public void ModelChanged(TicTacToeEvent e) { 
 		//spielfeld neu zeichnen, da in spieler ein kreuz gemacht hat, oder die spielelogik
-		hauptfenster.repaintGame();
-		
-		
-		
+		hauptfenster.repaintGame(e);
 		
 	}
 
@@ -36,73 +35,26 @@ public class Listener implements TicTacToeListener{
 		
 		
 		//e.getStatus() liefert aktuellen Status des Spiels, z.B. NOWINNER; SPIELER; TicTacToe; FINISH
-		
-		
-		
-		
-		
-		
 		if(hauptfenster.getTicTacToeLogic().getWinner() == TicTacToeLogic.NOWINNER){
 			System.out.println("noch kein Gewinner, spiel läuft");
-			
-			
-			
+		
 		}
 		
 		if(hauptfenster.getTicTacToeLogic().getWinner() == TicTacToeLogic.SPIELER){
 			System.out.println("Spieler hat gewonnen");
-			
-			
-			
+			hauptfenster.getSpielfeld().paintBackground(Color.GREEN);
+		
 		}
 		
 		if(hauptfenster.getTicTacToeLogic().getWinner() == TicTacToeLogic.TicTacToe){
 			System.out.println("Spielelogik ist Gewinner");
-			
-			
-			
+			hauptfenster.getSpielfeld().paintBackground(Color.YELLOW);
 		}
 		
 		if(hauptfenster.getTicTacToeLogic().getWinner() == TicTacToeLogic.FINISH){
 			System.out.println("Unentschieden");
-			
-			
-			
+			hauptfenster.getSpielfeld().paintBackground(Color.RED);
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	/*	if(e.getWinner() == TicTacToeLogic.NOWINNER){
-			System.out.println("Spiel läuft");
-		}
-		
-		if(TicTacToeLogic.) == TicTacToeLogic.SPIELER){
-			System.out.println("Spieler");
-		}
-		
-		if(e.getStatus() == TicTacToeLogic.TicTacToe){
-			System.out.println("Gegner");
-		}
-		
-		if(e.getStatus() == TicTacToeLogic.FINISH){
-			System.out.println("Alle Spielfelder besetzt und es gibt keinen Gewinner");
-		}
-		
-		*/
-		
-		
-		
-			
-			
-		
-		
-		
 	}
 
 }

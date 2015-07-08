@@ -2,31 +2,44 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import de.fhwgt.tictactoe.TicTacToeEvent;
 
-public class Spielfeld {
+
+public class Spielfeld extends JPanel{
 	
 	private JLabel[][] spielfeld;
-	private int zeilen = 3;
-	private int spalten = 3;
-	private Border border;
+	private int zeilen;
+	private int spalten;
 	private Hauptfenster hauptfenster;
 	
 	Spielfeld(Hauptfenster hauptfenster){
 		
 		this.hauptfenster = hauptfenster;
+		zeilen = hauptfenster.getTicTacToeLogic().getSize();
+		spalten = hauptfenster.getTicTacToeLogic().getSize();
 		
-		this.hauptfenster.setLayout(new GridLayout(zeilen, spalten));
-		
-		
-		border = LineBorder.createBlackLineBorder();
-		
+		//this.hauptfenster.setLayout(new GridLayout(zeilen, spalten));
 		
 		
+		
+		this.createSpielfeld();
+	}
+	
+	
+	
+	
+	public void createSpielfeld(){
+		this.setLayout(new GridLayout(zeilen, spalten)); //JLabel bekommt ein GridLayout
 		spielfeld = new JLabel[zeilen][spalten];
+		
+		
+		
 		
 		//Label mit größe 70 x 70 anlegen
 		
@@ -38,46 +51,34 @@ public class Spielfeld {
 				spielfeld[yAchse][xAchse] = new JLabel();
 				spielfeld[yAchse][xAchse].setPreferredSize(new Dimension(70, 70));
 				spielfeld[yAchse][xAchse].setBackground(Color.gray);
-				spielfeld[yAchse][xAchse].setBorder(border);
-				spielfeld[yAchse][xAchse].setOpaque(true);
+				spielfeld[yAchse][xAchse].setBorder(BorderFactory.createLineBorder(Color.black));
+				
 				spielfeld[yAchse][xAchse].addMouseListener(new ListenerMaus(this.hauptfenster));
-				this.hauptfenster.add(spielfeld[yAchse][xAchse]);
+				spielfeld[yAchse][xAchse].setOpaque(true);
+				this.add(spielfeld[yAchse][xAchse]);
 				
 			}
 		
 		}
-		this.fillSpielfeld();
 	}
 	
 	
-	public void fillSpielfeld(){
-		//Spielfiguren aus logik holen
-		
-	
-	/*	hauptfenster.getTicTacToeLogic().setField(0, 0);
-		spielfeld[0][0].setText("x");
-		hauptfenster.getTicTacToeLogic().setField(0, 1);
-		spielfeld[0][1].setText("x");*/
-		
-		
-		
-		
-	/*	String besetzungSpielfeld = hauptfenster.getTicTacToeLogic().BoardtoString();
-		double x =  hauptfenster.getTicTacToeLogic().getactivePoint().getX();
-		int y = (int) hauptfenster.getTicTacToeLogic().getactivePoint().getY();
-		
-	
-		System.out.println(x);
-		*/
-		
-		
-		//System.out.println("ActivePoint: " + hauptfenster.getTicTacToeLogic().getactivePoint());
+	public void drawSpielfeld(TicTacToeEvent e){
 		
 		if(hauptfenster.getTicTacToeLogic().getactivePoint() != null){
-			this.spielfeld[hauptfenster.getTicTacToeLogic().getactivePoint().x][hauptfenster.getTicTacToeLogic().getactivePoint().y].setText("x");
+			if(e.getSpieler() == 1){
+				this.spielfeld[hauptfenster.getTicTacToeLogic().getactivePoint().x][hauptfenster.getTicTacToeLogic().getactivePoint().y].setText("O");
+				this.spielfeld[hauptfenster.getTicTacToeLogic().getactivePoint().x][hauptfenster.getTicTacToeLogic().getactivePoint().y].setHorizontalAlignment(JLabel.CENTER);
+			}
+			else{
+				this.spielfeld[hauptfenster.getTicTacToeLogic().getactivePoint().x][hauptfenster.getTicTacToeLogic().getactivePoint().y].setText("X");
+				this.spielfeld[hauptfenster.getTicTacToeLogic().getactivePoint().x][hauptfenster.getTicTacToeLogic().getactivePoint().y].setHorizontalAlignment(JLabel.CENTER);
+			}
+			
+			
 		}
 		
-		hauptfenster.getTicTacToeLogic().printBoard();
+		hauptfenster.getTicTacToeLogic().printBoard(); //gibt Besetzung des Spielfelds auf der Konsole aus
 		System.out.println();
 		System.out.println();
 		
@@ -85,23 +86,30 @@ public class Spielfeld {
 		
 	}
 	
+	public void paintBackground(Color color){
+		
+		for(int y_achse = 0; y_achse < zeilen; y_achse++){
+			for(int x_achse = 0; x_achse < spalten; x_achse++){	
+				spielfeld[y_achse][x_achse].setBackground(color);;
+				this.add(spielfeld[y_achse][x_achse]);
+			}
+		}
+	}
 	
 	
-	public JLabel[][] getSpielfeldArray(){
+	
+	public JLabel[][] getSpielfeldLabels(){
 		return this.spielfeld;
 	}
 	
-	public void clearSpielfeld(){
+	/*public void clearSpielfeld(){
 		for(int k=0; k < zeilen; k++){
             for(int j=0; j < spalten; j++){
                     spielfeld[k][j].setText("");
             } 
 		}
+	
 		
-	}
+	}*/
 	
-	
-	
-	
-
 }
